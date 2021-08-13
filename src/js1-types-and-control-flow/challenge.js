@@ -20,6 +20,9 @@ const lastName = "Smith";
 
 export const createFullName = () => {
   // Write your code here
+  const fullName = `${firstName} ${lastName}`;
+
+  return fullName;
 };
 
 /**
@@ -33,6 +36,11 @@ const largeNumber2 = 200;
 
 export const findLargestNumber = () => {
   // Write your code here
+  if(largeNumber1 > largeNumber2){
+    return largeNumber1;
+  }else{
+    return largeNumber2;
+  }
 };
 
 /**
@@ -46,6 +54,7 @@ const addNumber2 = 24;
 
 export const addNumbers = () => {
   // Write your code here
+  return addNumber1 + addNumber2;
 };
 
 /* Intermediate Challenges */
@@ -60,6 +69,8 @@ const password = "thisIsMyVeryLongPassword123456789";
 
 export const findLengthOfPassword = () => {
   // Write your code here
+  const pwdLength  = password.length;
+  return pwdLength;
 };
 
 /**
@@ -76,6 +87,22 @@ const thing = "I am a thing";
 
 export const findType = () => {
   // Write your code here
+  let type = typeof(thing);
+  let result;
+  switch(type){
+    case "string":
+      result = "This is a string";
+      break;
+    case "number":
+      result = "This is a number";
+      break;
+    case "boolean":
+      result = "This is a boolean";
+      break
+    default:
+      result = "I don't know what this thing is";
+  }
+  return result;
 };
 
 /**
@@ -89,6 +116,11 @@ const nameTagOption = "Timothy";
 
 export const getIsValidOnNameTag = () => {
   // Write your code here
+  if(nameTagOption.length <= 8 && /[A-Z]/.test(nameTagOption[0])){
+    return true;
+  }else{
+    return false;
+  }
 };
 
 /* Advanced Challenges */
@@ -103,6 +135,7 @@ const stringToConvert = "14.45";
 
 export const convertStringToNumber = () => {
   // Write your code here
+  return Number(stringToConvert);
 };
 
 /**
@@ -117,6 +150,7 @@ const stringWithUppercaseLetters = "I Am A String With Uppercase Letters";
 
 export const getHasUppercaseLetters = () => {
   // Write your code here
+  return /[A-Z]/.test(stringWithUppercaseLetters);
 };
 
 /* Expert Challenge */
@@ -131,4 +165,9 @@ const pascalCaseVariableName = "IWantToBeSnakeCase";
 
 export const convertPascalCaseToSnakeCase = () => {
   // Write your code here
+  let snakeCase = pascalCaseVariableName
+    .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+    .map(x => x.toLowerCase())
+    .join("_");
+  return snakeCase;
 };
