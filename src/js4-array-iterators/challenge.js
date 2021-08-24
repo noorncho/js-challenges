@@ -202,7 +202,23 @@ export const formatString = (string) => {
  */
 
 export const fizzBuzz = (mixedArray) => {
-  const cleanArr = mixedArray.filter(str => {
+  const cleanArr = mixedArray.filter((str) => {
+    if(Number(str) && str > 0){
+      return str;
+    }
   });
-  return;
+
+  const fizzBuzz = cleanArr.map((item) => {
+    if(!(item % 3) && !(item % 5)){
+      return "FizzBuzz";
+    }
+    if(!(item % 3)){
+      return "Fizz";
+    }
+    if(!(item % 5)){
+      return "Buzz";
+    }
+    return item.toString();
+  });
+  return fizzBuzz;
 };
