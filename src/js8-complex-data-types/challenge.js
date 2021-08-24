@@ -18,6 +18,10 @@
  */
 export const getEmployeeQuotes = (employeeArr) => {
   // Write code here
+  const quoteArray = employeeArr.map((employee) => {
+    return employee.quote;
+  });
+  return quoteArray;
 };
 
 /**
@@ -28,6 +32,10 @@ export const getEmployeeQuotes = (employeeArr) => {
  */
 export const getTheManagers = (employeeArr) => {
   // Write code here
+  const managerArr = employeeArr.filter((employee) => {
+    return employee.isManagement;
+  })
+  return managerArr;
 };
 
 /**
@@ -38,6 +46,7 @@ export const getTheManagers = (employeeArr) => {
  */
 export const getNumberOfKeys = (object) => {
   // Write code here
+  return Object.keys(object).length;
 };
 
 /* Intermediate Challenges */
@@ -51,6 +60,8 @@ export const getNumberOfKeys = (object) => {
  */
 export const findMostExpensiveItem = (shoppingBasketArr) => {
   // Write code here
+  const sortedBasket = shoppingBasketArr.sort((a, b) => (b.price - a.price));
+  return sortedBasket[0];
 };
 
 /**
@@ -70,6 +81,12 @@ export const findMostExpensiveItem = (shoppingBasketArr) => {
  */
 export const settotalPrice = (shoppingBasketArr) => {
   // Write code here
+  const newArr = shoppingBasketArr.map((item) => {
+    const newItem = {...item};
+    newItem.totalPrice = newItem.price * newItem.quantity;
+    return newItem;
+  })
+  return newArr;
 };
 
 /**
@@ -80,6 +97,9 @@ export const settotalPrice = (shoppingBasketArr) => {
  */
 export const totalShoppingBasket = (shoppingBasketArr) => {
   // Write code here
+  let cost = 0;
+  shoppingBasketArr.forEach((item) => cost += item.totalPrice)
+  return cost;
 };
 
 /* Advanced Challenges */
@@ -93,6 +113,13 @@ export const totalShoppingBasket = (shoppingBasketArr) => {
  */
 export const getImportantKeys = (mealsArr) => {
   // Write code here
+  const newArr = mealsArr.map((meal) =>{
+    const newMeal = {...meal};
+    delete newMeal.timeStamp;
+    delete newMeal.userCreated;
+    return newMeal;
+  })
+  return newArr;
 };
 
 /**
@@ -107,6 +134,17 @@ export const getImportantKeys = (mealsArr) => {
  */
 export const setImportantKeys = (mealsArr) => {
   // Write code here
+  const newArr = mealsArr.map((meal) => {
+    const newMeal = {...meal};
+    if(!newMeal.hasOwnProperty("isVegetarian")){
+      newMeal.isVegetarian = false;
+    }
+    if(!newMeal.hasOwnProperty("timeToCook")){
+      newMeal.timeToCook = 15
+    }
+    return newMeal;
+  })
+  return newArr;
 };
 
 /* Expert Challenge */
