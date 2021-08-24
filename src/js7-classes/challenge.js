@@ -27,7 +27,10 @@ export class Coordinate {
    * @param {number} xCoord - 22.
    * @param {number} yCoord - 20.
    */
-  constructor(xCoord, yCoord) {}
+  constructor(xCoord, yCoord) {
+    this.xCoord = xCoord;
+    this.yCoord = yCoord;
+  }
 }
 
 /**
@@ -48,14 +51,17 @@ export class Alert {
    * Create an alert.
    * @param {string} message - "Are sure you want to proceed?"
    */
-  constructor() {}
+  constructor(message) {
+    this.message = message;
+  }
 
   /**
    * Returns a string with "!!!! " + " !!!!" added to the start and end of the message key.
    * @return {string} "!!!! Are sure you want to proceed? !!!!"
    */
   printMessage() {
-    return;
+    const message = `!!!! ${this.message} !!!!`
+    return message;
   }
 }
 
@@ -83,17 +89,23 @@ export class Loader {
    * Create a loader.
    * @param {{innerHTML:string}} htmlRef - {innerHTML:""}
    */
-  constructor() {}
+  constructor(htmlRef) {
+    this.htmlRef = htmlRef;
+  }
 
   /**
    * Updates the htmlRef.innerHTML to display the loader's html.
    */
-  displayLoader() {}
+  displayLoader() {
+    this.htmlRef.innerHTML = `<div class="loader"></div>`;
+  }
 
   /**
    * Updates the htmlRef.innerHTML to remove the loader's html.
    */
-  removeLoader() {}
+  removeLoader() {
+    this.htmlRef.innerHTML = "";
+  }
 }
 
 /**
@@ -125,7 +137,9 @@ export class Counter {
    * Create an counter.
    * @param {number} count - 50
    */
-  constructor() {}
+  constructor(count = 0) {
+    this.count = count;
+  }
 
   /**
    * A method that increments count by 1.
@@ -133,6 +147,10 @@ export class Counter {
    */
 
   // WRITE INCREMENT FUNCTION HERE
+  increment(){
+    this.count += 1;
+    return this.count;
+  }
 
   /**
    * A method that decrements count by 1 but will not go below 0.
@@ -140,6 +158,14 @@ export class Counter {
    */
 
   // WRITE DECREMENT FUNCTION HERE
+  decrement(){
+    if(this.count === 0){
+      return this.count;
+    }else{
+      this.count -= 1;
+      return this.count;
+    }
+  }
 }
 
 /**
@@ -167,14 +193,21 @@ export class Engine {
   /**
    * Create an engine.
    */
-  constructor() {}
+  constructor() {
+    this.engineIsRunning = false;
+  }
 
   /**
    * Updates engineIsRunning to true and returns a conditonal string based if the engine is already running.
    * @return {string} "Engine has started running" or "Engine is already running"
    */
   startEngine() {
-    return;
+    if(this.engineIsRunning === false){
+      this.engineIsRunning = true;
+      return "Engine has started running";
+    }else{
+      return "Engine is already running";
+    }    
   }
 
   /**
@@ -182,7 +215,12 @@ export class Engine {
    * @return {string} "Engine has stopped running" or "Engine has already stopped running"
    */
   stopEngine() {
-    return;
+    if(this.engineIsRunning === false){
+      return "Engine has already stopped running";
+    } else{
+      this.engineIsRunning = false;
+      return "Engine has stopped running";
+    }    
   }
 }
 
@@ -224,19 +262,41 @@ export class Modal {
    * @param {string} title - "Error"
    * @param {string} message - "We are currently unable to provide this service"
    */
-  constructor() {}
+  constructor(htmlRef, title, message) {
+    this.htmlRef = htmlRef;
+    this.title = title;
+    this.message = message;
+  }
 
   /**
    * A method that renders the html for a modal.
    */
 
   // WRITE RENDER HTML METHOD HERE
+  renderHtml(){
+    this.htmlRef.innerHTML = `
+    <div class="modal">
+      <h2 class="modal--title">${this.title}</h2>
+      <p class="modal--message">${this.message}</p>
+    </div>
+    `;
+  }
 
   /**
    * A method that toggles a CSS class to either show or hide the modal.
    */
 
   // WRITE DISPLAY MODAL METHOD HERE
+  displayModal(){
+    // if(this.htmlRef.classList.contains("show")){
+    //   this.htmlRef.classList.remove("show");
+    //   this.htmlRef.classList.add("hide");
+    // }else{
+    //   this.htmlRef.classList.remove("hide");
+    //   this.htmlRef.classList.add("show");
+    // }
+    this.htmlRef.classList.toggle("hide");
+  }
 }
 
 /**
@@ -304,6 +364,10 @@ export class BookShelf {
    */
 
   // WRITE LATEST BOOK GETTER HERE
+  get latestBook(){
+    const length = this._booksOnShelf.length - 1;
+    return this._booksOnShelf[length];
+  }
 
   /**
    * A setter that adds a new book to the list of books.
@@ -311,6 +375,9 @@ export class BookShelf {
    */
 
   // WRITE ADD BOOK TO SHELF SETTER HERE
+  set addBookToShelf(book){
+    this._booksOnShelf.push(book);
+  }
 }
 
 /**
@@ -363,7 +430,11 @@ export class BankAccount {
    * @param {string} email
    * @param {number} balance
    */
-  constructor() {}
+  constructor(name, email, balance = 0) {
+    this.name = name;
+    this.email = email;
+    this._balance = balance;
+  }
 
   /**
    * A getter that returns the current balance.
@@ -371,6 +442,9 @@ export class BankAccount {
    */
 
   // WRITE BALANCE GETTER HERE
+  get balance(){
+    return this._balance;
+  }
 
   /**
    * A method that deposits to the balance.
@@ -382,6 +456,15 @@ export class BankAccount {
    */
 
   // WRITE DEPOSIT METHOD HERE
+  deposit(toDeposit){
+    const convertToNum = Number(toDeposit);
+
+    if(!convertToNum|| convertToNum < 0){
+      return "Invalid input, unable to deposit";
+    }
+    this._balance += convertToNum;
+    return this._balance;
+  }
 
   /**
    * A method that withdraws from the balance.
@@ -394,4 +477,18 @@ export class BankAccount {
    */
 
   // WRITE WITH DRAW METHOD HERE
+  withdraw(toWithdraw){
+    const convertToNum = Number(toWithdraw);
+    
+    if(!convertToNum || convertToNum < 0){
+      return "Invalid input, unable to withdraw";
+    }
+
+    if(convertToNum > this._balance){
+      return "Insufficient funds, unable to withdraw";
+    }
+
+    this._balance -= convertToNum;
+    return this._balance;
+  }
 }
